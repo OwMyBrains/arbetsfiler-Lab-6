@@ -22,7 +22,6 @@ async function getRecipes(searchText) {
       throw new Error("Fel");
     }
     const data = await response.json();
-    //console.log(data);
 
     return data;
   } catch (error) {
@@ -33,16 +32,18 @@ async function getRecipes(searchText) {
 async function showRecipes(event) {
   event.preventDefault();
 
+  // kollar så det är något skrivet i sökfältet
   if (inputEl.value.trim() === "") {
     error.innerHTML = "Skriv in ett sökord för att hitta ett recept!";
     recipesEL.innerHTML = "";
     return;
   }
 
+  //Väntar på data som sedan skrivs ut om det finns något som matchar sökningen
   const data = await getRecipes(inputEl.value);
 
   if (!data) {
-    error.innerHTML = `Sök efter ett recept`;
+    error.innerHTML = `Kan inte hitta något recept som matchar sökningen.`;
     return;
   }
   //Felmeddelande om det inte hittas några recpet i sökningen
