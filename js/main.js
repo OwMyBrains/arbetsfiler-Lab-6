@@ -4,12 +4,14 @@
  * Namn: Pether Sand
  */
 
+//Hämtar element från DOM
 const form = document.querySelector("#searchform");
 const inputEl = document.querySelector("#search");
 const recipesEL = document.querySelector("#recipe");
 const error = document.querySelector("#message");
 const strongEl = document.getElementsByName("strong");
 
+//funktion för att hämta API med recept
 async function getRecipes(searchText) {
   try {
     const response = await fetch(
@@ -26,7 +28,7 @@ async function getRecipes(searchText) {
     console.error("Något blev fel");
   }
 }
-
+//Funktion för att visa recepten som sökts
 async function showRecipes(event) {
   event.preventDefault();
 
@@ -35,7 +37,9 @@ async function showRecipes(event) {
 
   if (!data) {
     error.innerHTML = `Sök efter ett recept`;
+    return;
   }
+  //Felmeddelande om det inte hittas några recpet i sökningen
   if (data.recipes.length === 0) {
     error.innerHTML = `Kan inte hitta något recept som matchar sökningen.`;
   }
@@ -58,6 +62,12 @@ async function showRecipes(event) {
                         <p>Cuisine: ${recipes.cuisine}</p>
                     </div>
 
+                    <h4>Ingredients</h4>
+                    <ul>
+                      ${recipes.ingredients
+                        .map((ingredient) => `<li>${ingredient}</li>`)
+                        .join("")}
+                    </ul>
 
                 </article>`;
     error.innerHTML = "";
