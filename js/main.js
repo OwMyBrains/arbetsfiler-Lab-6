@@ -69,6 +69,18 @@ async function showRecipes(event) {
                         .join("")}
                     </ul>
 
+                    <h4>Instructions</h4>
+                    <ol>
+                    ${recipes.instructions
+                      .map((instruction) => `<li>${instruction}</li>`)
+                      .join("")}
+                    </ol>
+                    <h4>Instructions</h4>
+                    <ol>
+                    ${recipes.instructions
+                      .map((instruction) => `<li>${instruction}</li>`)
+                      .join("")}
+                    </ol>
                 </article>`;
     error.innerHTML = "";
     console.log(recipes.name);
