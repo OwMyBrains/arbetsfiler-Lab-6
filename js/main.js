@@ -17,6 +17,7 @@ async function getRecipes(searchText) {
     const response = await fetch(
       `https://dummyjson.com/recipes/search?q=${searchText}`,
     );
+
     if (!response.ok) {
       throw new Error("Fel");
     }
@@ -32,8 +33,13 @@ async function getRecipes(searchText) {
 async function showRecipes(event) {
   event.preventDefault();
 
+  if (inputEl.value.trim() === "") {
+    error.innerHTML = "Skriv in ett sökord för att hitta ett recept!";
+    recipesEL.innerHTML = "";
+    return;
+  }
+
   const data = await getRecipes(inputEl.value);
-  console.log(data);
 
   if (!data) {
     error.innerHTML = `Sök efter ett recept`;
@@ -84,7 +90,6 @@ async function showRecipes(event) {
                     </ol>
                 </article>`;
     error.innerHTML = "";
-    console.log(recipes.name);
   });
 }
 //Eventlistener för sökningen av recept.
