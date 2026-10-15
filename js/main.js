@@ -43,6 +43,7 @@ async function showRecipes(event) {
   if (data.recipes.length === 0) {
     error.innerHTML = `Kan inte hitta något recept som matchar sökningen.`;
   }
+  //ForEach loop som skriver ut recept som hittats.
   recipesEL.innerHTML = "";
   data.recipes.forEach((recipes) => {
     recipesEL.innerHTML += `
@@ -86,5 +87,5 @@ async function showRecipes(event) {
     console.log(recipes.name);
   });
 }
-
+//Eventlistener för sökningen av recept.
 form.addEventListener("submit", showRecipes);
