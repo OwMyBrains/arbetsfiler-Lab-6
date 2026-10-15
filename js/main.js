@@ -19,8 +19,6 @@ async function getRecipes(searchText) {
       throw new Error("Fel");
     }
     const data = await response.json();
-    console.log(data);
-
     //console.log(data);
 
     return data;
@@ -28,4 +26,31 @@ async function getRecipes(searchText) {
     console.error("Något blev fel");
   }
 }
-getRecipes("Pizza");
+
+async function showRecipes(event) {
+  event.preventDefault();
+
+  const data = await getRecipes(inputEl.value);
+  console.log(data);
+
+  if (!data) {
+    error.innerHTML = `Sök efter ett recept`;
+  }
+  if (data.recipes.length === 0) {
+    error.innerHTML = `Kan inte hitta något recept som matchar sökningen.`;
+  }
+  recipesEL.innerHTML = "";
+  data.recipes.forEach((recipes) => {
+    recipesEL.innerHTML += `
+     <article>
+                    <h3>${recipes.name}</h3>
+
+                    <img src="${recipes.image}" alt="${recipes.name}">
+
+                </article>`;
+    error.innerHTML = "";
+    console.log(recipes.name);
+  });
+}
+
+form.addEventListener("submit", showRecipes);
