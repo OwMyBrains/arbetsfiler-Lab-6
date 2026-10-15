@@ -28,4 +28,4 @@ async function getRecipes(searchText) {
     console.error("Något blev fel");
   }
 }
-getRecipes("pasta");
+getRecipes("Pizza");
