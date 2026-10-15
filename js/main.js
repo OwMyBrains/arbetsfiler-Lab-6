@@ -47,6 +47,18 @@ async function showRecipes(event) {
 
                     <img src="${recipes.image}" alt="${recipes.name}">
 
+                    <div class="recipe-info">
+                        <p>Servings: ${recipes.servings}</p>
+                        <p>Prep time: ${recipes.prepTimeMinutes} min</p>
+                        <p>Cooking time: ${recipes.cookTimeMinutes} min</p>
+                        <p>Difficulty: ${recipes.difficulty}</p>
+                        <p>Rating: ${recipes.rating}</p>
+                        <p>Review count: ${recipes.reviewCount}</p>
+                        <p>Calories per serving: ${recipes.caloriesPerServing}</p>
+                        <p>Cuisine: ${recipes.cuisine}</p>
+                    </div>
+
+
                 </article>`;
     error.innerHTML = "";
     console.log(recipes.name);
