@@ -8,7 +8,8 @@
 const form = document.querySelector("#searchform");
 const inputEl = document.querySelector("#search");
 const recipesEL = document.querySelector("#recipe");
-const error = document.querySelector("#message");
+const error = document.querySelector("#error");
+const errorSearch = document.querySelector("#message");
 const strongEl = document.getElementsByName("strong");
 
 //funktion för att hämta API med recept
@@ -25,7 +26,8 @@ async function getRecipes(searchText) {
 
     return data;
   } catch (error) {
-    console.error("Något blev fel");
+    errorSearch.innerHTML = "";
+    recipesEL.innerHTML = "";
   }
 }
 //Funktion för att visa recepten som sökts
@@ -35,6 +37,7 @@ async function showRecipes(event) {
   // kollar så det är något skrivet i sökfältet
   if (inputEl.value.trim() === "") {
     error.innerHTML = "Skriv in ett sökord för att hitta ett recept!";
+    errorSearch.innerHTML = "";
     recipesEL.innerHTML = "";
     return;
   }
@@ -43,17 +46,18 @@ async function showRecipes(event) {
   const data = await getRecipes(inputEl.value);
 
   if (!data) {
-    error.innerHTML = `Kan inte hitta något recept som matchar sökningen.`;
+    error.innerHTML = `Något gick fel, försök igen`;
     return;
   }
   //Felmeddelande om det inte hittas några recpet i sökningen
   if (data.recipes.length === 0) {
-    error.innerHTML = `Kan inte hitta något recept som matchar sökningen.`;
+    errorSearch.innerHTML = `Kan inte hitta något recept som matchar sökningen.`;
+    error.innerHTML = "";
   }
   //ForEach loop som skriver ut recept som hittats.
   recipesEL.innerHTML = "";
   data.recipes.forEach((recipes) => {
-    recipesEL.innerHTML += `
+    recipesEL.innerHTML = `
      <article>
                     <h3>${recipes.name}</h3>
 
@@ -83,14 +87,9 @@ async function showRecipes(event) {
                       .map((instruction) => `<li>${instruction}</li>`)
                       .join("")}
                     </ol>
-                    <h4>Instructions</h4>
-                    <ol>
-                    ${recipes.instructions
-                      .map((instruction) => `<li>${instruction}</li>`)
-                      .join("")}
-                    </ol>
                 </article>`;
     error.innerHTML = "";
+    errorSearch.innerHTML = "";
   });
 }
 //Eventlistener för sökningen av recept.
